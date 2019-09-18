@@ -16,6 +16,26 @@ Suitable for Linux Distributions based on Systemd.
 
 I'm not take any responsibility for any of your loss or malfunction.
 
+## Config File Explained
+
+```json
+{
+    "local-httpport": 1085,         // local http proxy port
+    "local-socks5port": 1086,       // local socks5 proxy port
+    "local-redirport": 1087,        // local transparent proxy port
+    "control-addr": "127.0.0.1:9090",       // remote restapi listen port
+    "allow-lan": true,              // allow devices in lan connection
+    "dns-enable": true,             // enable built-in dns resolver support
+    "dns-socket": "0.0.0.0:53",     // built-in dns listen on
+    "dns-enhanced": "fake-ip",      // built-in dns working mode, available: fake-ip / redir-host
+    "dns-ipv6": true,               // built-in dns resolving ipv6
+    "upstream-dns": ["119.29.29.29", "223.5.5.5"],      // upstream dns address, support protocol: pure ip (Traditional UDP) , tls:// (DoT), https:// (DoH EndPoint),  tcp:// (Fallback DNS, concurrent processing),
+    "fallback-dns": ["1.1.1.1", "8.8.8.8"],         // Fallback DNS if GEOIP is not CN
+    "latency-test-url": "http://captive.rixcloud.io/generate_204",     // Clash for Windows Specific Latency Test URL
+    "subscribe-url": ["http://host:port/apikey/clash/config.yaml"]      // Your Subscription URL
+}
+```
+
 # Licence
 
  clash-linux-upd

@@ -1,10 +1,15 @@
 {
     "local-httpport": 1085,
-    "local-socck5port": 1086,
+    "local-socks5port": 1086,
     "local-redirport": 1087,
-    "control-port": 9090,
+    "control-addr": "127.0.0.1:9090",
     "allow-lan": true,
     "dns-enable": true,
     "dns-socket": "0.0.0.0:53",
+    "dns-enhanced": "fake-ip",
+    "dns-ipv6": true,
+    "upstream-dns": ["119.29.29.29", "223.5.5.5"],
+    "fallback-dns": ["1.1.1.1", "8.8.8.8"],
+    "latency-test-url": "http://captive.rixcloud.io/generate_204",
     "subscribe-url": ["http://host:port/apikey/clash/config.yaml"]
 }

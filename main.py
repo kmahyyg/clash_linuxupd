@@ -19,6 +19,17 @@ else:
 
 usrconf = json.loads(open(usrconf, "r", encoding="utf-8").read())
 
+def checkconfig():
+    if usrconf["subscribe-url"] == ["http://host:port/apikey/clash/config.yaml"]:
+        raise EnvironmentError("You don't have configured any subscription url till now.")
+        sys.exit(2)
+    if usrconf["dns-enhanced"] == "fake-ip" or usrconf["dns-enhanced"] == "redir-host":
+        pass
+    else:
+        raise EnvironmentError("DNS Enhanced Mode configuration Error!")
+        sys.exit(2)
+
+
 def main():
     subsconf = []
     # Access each url to get data
@@ -41,7 +52,7 @@ def main():
         for i in subsconf:
             finaldata = i
     # Dump the data to file
-    #TODO
+    
     
 
 if __name__ == "__main__":
