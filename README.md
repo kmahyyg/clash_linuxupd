@@ -2,15 +2,29 @@
 
 Suitable for Linux Distributions based on Systemd.
 
+## Dependency
+
+For Arch Linux User, just install `clash` from `archlinuxcn` repo. And enable then start `clash@<YOUR_USERNAME>.service` after you run this service.
+
 ## Usage
 
 - Clone the repo into `~/.local/clash_linuxupd`
 - Change config (ports, dns, allow-lan) in `user-subscribe.json.eg`
 - Rename `user-subscribe.json.eg` to `user-subscribe.json` and copy to `~/.config/clash`
 - Insert your managed subscription config file URL into json
-- Copy the `clash_linuxupd.service` into `/etc/systemd/system`
-- Run `systemctl daemon-reload` and `systemctl enable clash_linuxupd` to enable autorestart.
-- Finally `systemctl start clash_linuxupd` to start service.
+- Copy the `clash_linuxupd@.service` into `/etc/systemd/system`
+- Run `systemctl daemon-reload` and `systemctl enable clash_linuxupd@<YOUR_USERNAME>` to enable autorestart.
+- Finally `systemctl start clash_linuxupd@<YOUR_USERNAME>` to start service.
+
+## YACD
+
+Thanks to [YACD - Yet Another Clash Dashboard](https://github.com/haishanh/yacd), the `yacd_pages` comes from its `gh-pages` branch, version 190829.
+
+If you need web service, simply copy `clash_linuxupd_yacd.service` into `/etc/systemd/system`.
+
+Then `systemctl daemon-reload` and `systemctl enable clash_linuxupd_yacd` to enable autostart, run `systemctl start clash_linuxupd_yacd` to boot up web server.
+
+The Web Server will listen on port 127.0.0.1:62038 .
 
 ## Disclaimer
 
@@ -31,8 +45,9 @@ I'm not take any responsibility for any of your loss or malfunction.
     "dns-ipv6": true,               // built-in dns resolving ipv6
     "upstream-dns": ["119.29.29.29", "223.5.5.5"],      // upstream dns address, support protocol: pure ip (Traditional UDP) , tls:// (DoT), https:// (DoH EndPoint),  tcp:// (Fallback DNS, concurrent processing),
     "fallback-dns": ["1.1.1.1", "8.8.8.8"],         // Fallback DNS if GEOIP is not CN
-    "latency-test-url": "http://captive.rixcloud.io/generate_204",     // Clash for Windows Specific Latency Test URL
-    "subscribe-url": ["http://host:port/apikey/clash/config.yaml"]      // Your Subscription URL
+    "subscribe-url": ["http://host:port/apikey/clash/config.yaml"],      // Your Subscription URL
+    "rules-preference": 0,         // Clash Rule Preferrence, default is the rules comes with your first subscription URL, start from 0
+    "latency-test-url": "http://captive.rixcloud.io/generate_204"     // Clash for Windows Specific Latency Test URL
 }
 ```
 

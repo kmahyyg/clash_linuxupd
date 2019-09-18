@@ -1,0 +1,14 @@
+[Unit]
+Description=Clash Background Subscription Updater - YACD Web Panel
+After=local-fs.target network-online.target network.target
+Wants=local-fs.target network-online.target network.target
+
+[Service]
+ExecStart=/usr/bin/python3 ~/.local/clash_linuxupd/web_yacd.py
+KillMode=process
+Type=simple
+Restart=on-abnormal
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

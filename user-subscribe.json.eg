@@ -10,6 +10,7 @@
     "dns-ipv6": true,
     "upstream-dns": ["119.29.29.29", "223.5.5.5"],
     "fallback-dns": ["1.1.1.1", "8.8.8.8"],
-    "latency-test-url": "http://captive.rixcloud.io/generate_204",
-    "subscribe-url": ["http://host:port/apikey/clash/config.yaml"]
+    "subscribe-url": ["http://host:port/apikey/clash/config.yaml"],
+    "rules-preference": 0,
+    "latency-test-url": "http://captive.rixcloud.io/generate_204"
 }
