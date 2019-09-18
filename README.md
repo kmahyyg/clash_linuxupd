@@ -7,7 +7,9 @@ Suitable for Linux Distributions based on Systemd.
 - Change config (ports, dns, allow-lan) in `user-subscribe.json.eg`
 - Rename `user-subscribe.json.eg` to `user-subscribe.json` and copy to `~/.config/clash`
 - Insert your managed subscription config file URL into json
-
+- Copy the `clash_linuxupd.service` into `/etc/systemd/system`
+- Run `systemctl daemon-reload` and `systemctl enable clash_linuxupd` to enable autorestart.
+- Finally `systemctl start clash_linuxupd` to start service.
 
 # Licence
 
