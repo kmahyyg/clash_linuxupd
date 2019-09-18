@@ -1,0 +1,10 @@
+{
+    "local-httpport": 1085,
+    "local-socck5port": 1086,
+    "local-redirport": 1087,
+    "control-port": 9090,
+    "allow-lan": true,
+    "dns-enable": true,
+    "dns-socket": "0.0.0.0:53",
+    "subscribe-url": ["http://host:port/apikey/clash/config.yaml"]
+}
