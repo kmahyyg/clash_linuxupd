@@ -48,7 +48,10 @@ def preparing():
             "fallback": usrconf["fallback-dns"]
         },
         "cfw-latency-url": "http://captive.rixcloud.io/generate_204",
-        "cfw-bypass": ["qq.com", "music.163.com", "*.music.126.net", "localhost", "127.*", "10.*", "172.16.*", "172.17.*", "172.18.*", "172.19.*", "172.20.*", "172.21.*", "172.22.*", "172.23.*", "172.24.*", "172.25.*", "172.26.*", "172.27.*", "172.28.*", "172.29.*", "172.30.*", "172.31.*", "192.168.*", "<local>"],
+        "cfw-bypass": ["qq.com", "music.163.com", "*.music.126.net", "localhost", "127.*", "10.*", "172.16.*",
+                       "172.17.*", "172.18.*", "172.19.*", "172.20.*", "172.21.*", "172.22.*", "172.23.*", "172.24.*",
+                       "172.25.*", "172.26.*", "172.27.*", "172.28.*", "172.29.*", "172.30.*", "172.31.*",
+                       "192.168.*", "<local>"],
         "cfw-latency-timeout": 5000,
         "Proxy": [],
         "Proxy Group": [],
@@ -79,8 +82,8 @@ def main():
         subsconf = list(dict.fromkeys(subsconf))
     else:
         print("Cannot Read Content of Subscription Manager Response.")
-    finaldata = preparing()        # Initiate final data storage area.
-    tempstorage = []        # Save the loaded yaml dict
+    finaldata = preparing()  # Initiate final data storage area.
+    tempstorage = []  # Save the loaded yaml dict
     service_provider_list = []
     for cfgfd in subsconf:
         current_isp = yaml.safe_load(cfgfd)
@@ -114,7 +117,7 @@ def main():
     load_balancer_policy = {"name": "lb-allproxy", "type": "load-balance",
                             "url": "http://captive.rixcloud.io/generate_204",
                             "interval": 300, "proxies": ["DIRECT", "REJECT"]
-                        }
+                            }
     for proxies in service_provider_list:
         load_balancer_policy["proxies"].append(proxies)
     proxy_groups.append(load_balancer_policy)
@@ -124,7 +127,7 @@ def main():
     with open(os.path.expanduser('~/.config/clash/config.yaml'), 'w') as configfd:
         configfd.write(yaml.dump(finaldata))
     return 0
-    
+
 
 if __name__ == "__main__":
     main()
