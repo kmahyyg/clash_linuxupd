@@ -119,13 +119,15 @@ def main():
     proxy_groups = []
     for i in range(0, len(tempstorage)):
         if i == usrconf["rules-preference"]:
-            proxy_groups.append(tempstorage[i]["Proxy Group"])
+            for dt in tempstorage[i]["Proxy Group"]:
+                proxy_groups.append(dt)
         else:
             for groupdt in tempstorage[i]["Proxy Group"]:
                 if groupdt["name"] == service_provider_list[i]:
                     proxy_groups.append(groupdt)
                 else:
                     pass
+    finaldata["Proxy Group"] = proxy_groups
     # ADD AUTO_LOAD_BALANCE_STRATEGY
     # Reference: https://github.com/Dreamacro/clash
     print("Building customized load balance config...")
@@ -142,7 +144,7 @@ def main():
     # Dump the data to file
     print("Write processed config to file...")
     with open(os.path.expanduser('~/.config/clash/config.yaml'), 'w', encoding='utf-8') as configfd:
-        configfd.write(yaml.dump(finaldata, allow_unicode=True, encoding='utf-8'))
+        configfd.write(yaml.dump(finaldata, allow_unicode=True, encoding='utf-8').decode())
     print("Please restart clash service... The web panel is on port 62038...")
     return 0
 
