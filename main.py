@@ -22,12 +22,10 @@ usrconf = json.loads(open(usrconf, "r", encoding="utf-8").read())
 def checkconfig():
     if usrconf["subscribe-url"] == ["http://host:port/apikey/clash/config.yaml"]:
         raise EnvironmentError("You don't have configured any subscription url till now.")
-        sys.exit(2)
     if usrconf["dns-enhanced"] == "fake-ip" or usrconf["dns-enhanced"] == "redir-host":
         pass
     else:
         raise EnvironmentError("DNS Enhanced Mode configuration Error!")
-        sys.exit(2)
 
 
 def preparing():
@@ -84,11 +82,14 @@ def main():
                 subsconf.append(httpget(url, timeout=5).text)
         except ConnectTimeout:
             print("Cannot connect to " + urlparse(url).netloc + " , This config is ignored!")
+        except ProxyError:
+            print("Your Proxy Server Config is not correct, please check again.")
+            sys.exit(2)
     # Remove duplicate guys
     if subsconf:
         subsconf = list(dict.fromkeys(subsconf))
     else:
-        print("Cannot Read Content of Subscription Manager Response.")
+        raise Exception("Cannot Read Content of Subscription Manager Response.")
     finaldata = preparing()  # Initiate final data storage area.
     tempstorage = []  # Save the loaded yaml dict
     service_provider_list = []
