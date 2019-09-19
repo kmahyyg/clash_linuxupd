@@ -12,5 +12,7 @@
     "fallback-dns": ["1.1.1.1", "8.8.8.8"],
     "subscribe-url": ["http://host:port/apikey/clash/config.yaml"],
     "rules-preference": 0,
-    "latency-test-url": "http://captive.rixcloud.io/generate_204"
+    "latency-test-url": "http://captive.rixcloud.io/generate_204",
+    "gfwed_proxy": "http://127.0.0.1:1086",
+    "is_gfwed": true
 }

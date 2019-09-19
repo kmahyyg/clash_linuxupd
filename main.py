@@ -74,7 +74,14 @@ def main():
     # Access each url to get data
     for url in usrconf["subscribe-url"]:
         try:
-            subsconf.append(httpget(url).text)
+            if usrconf["is_gfwed"]:
+                fuckgfw = {
+                    'http': usrconf["gfwed_proxy"],
+                    'https': usrconf["gfwed_proxy"],
+                }
+                subsconf.append(httpget(url, timeout=5, proxies=fuckgfw).text)
+            else:
+                subsconf.append(httpget(url, timeout=5).text)
         except ConnectTimeout:
             print("Cannot connect to " + urlparse(url).netloc + " , This config is ignored!")
     # Remove duplicate guys

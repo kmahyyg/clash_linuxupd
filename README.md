@@ -34,7 +34,7 @@ I'm not take any responsibility for any of your loss or malfunction.
 
 ## Config File Explained
 
-```json
+```jsonc
 {
     "local-httpport": 1085,         // local http proxy port
     "local-socks5port": 1086,       // local socks5 proxy port
@@ -49,7 +49,9 @@ I'm not take any responsibility for any of your loss or malfunction.
     "fallback-dns": ["1.1.1.1", "8.8.8.8"],         // Fallback DNS if GEOIP is not CN
     "subscribe-url": ["http://host:port/apikey/clash/config.yaml"],      // Your Subscription URL
     "rules-preference": 0,         // Clash Rule Preferrence, default is the rules comes with your first subscription URL, start from 0
-    "latency-test-url": "http://captive.rixcloud.io/generate_204"     // Clash for Windows Specific Latency Test URL
+    "latency-test-url": "http://captive.rixcloud.io/generate_204",     // Clash for Windows Specific Latency Test URL
+    "gfwed_proxy": "http://127.0.0.1:1086",         // If subscription URL get banned, use this proxy first, support: (http/socks5)://user:pass@host:port
+    "is_gfwed": true        // Option to confirm subscription URL get banned, manually set
 }
 ```
 
