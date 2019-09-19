@@ -131,7 +131,7 @@ def main():
     # ADD AUTO_LOAD_BALANCE_STRATEGY
     # Reference: https://github.com/Dreamacro/clash
     print("Building customized load balance config...")
-    load_balancer_policy = {"name": "lb-allproxy", "type": "load-balance",
+    load_balancer_policy = {"name": "LB-ALLPROXY", "type": "load-balance",
                             "url": usrconf["latency-test-url"],
                             "interval": 300, "proxies": ["DIRECT", "REJECT"]
                             }
@@ -140,7 +140,12 @@ def main():
     proxy_groups.append(load_balancer_policy)
     # Processing Rules
     print("Add the preferred rules managed by your ISP...")
-    finaldata["Rule"] = tempstorage[usrconf["rules-preference"]]["Rule"]
+    # Process rules to replace ISP name to LB-ALLPROXY
+    finaldata["Rule"] = []
+    print("Replace ISP Rules to Load Balancer...")
+    for perr in tempstorage[usrconf["rules-preference"]]["Rule"]:
+        dt = perr.replace(service_provider_list[usrconf["rules-preference"]], "LB-ALLPROXY")
+        finaldata["Rule"].append(dt)
     # Dump the data to file
     print("Write processed config to file...")
     with open(os.path.expanduser('~/.config/clash/config.yaml'), 'w', encoding='utf-8') as configfd:

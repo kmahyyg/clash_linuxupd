@@ -4,9 +4,9 @@ Suitable for Linux Distributions based on Systemd.
 
 ## Dependency
 
-For Arch Linux User, just install `clash` from `archlinuxcn` repo. And enable then start `clash@<YOUR_USERNAME>.service` after you run this service.
+First, modify your current `/usr/lib/systemd/system/clash@.service`, append ` clash_linuxupd.service` to `After=` line.
 
-Please modify this service to let `clash_linuxupd.service` before `clash.service` start.
+For Arch Linux User, just install `clash` from `archlinuxcn` repo. And enable then start `clash@<YOUR_USERNAME>.service` after you run this service.
 
 ## Usage
 
@@ -14,19 +14,19 @@ Please modify this service to let `clash_linuxupd.service` before `clash.service
 - Change config (ports, dns, allow-lan) in `user-subscribe.json.eg`
 - Rename `user-subscribe.json.eg` to `user-subscribe.json` and copy to `~/.config/clash`
 - Insert your managed subscription config file URL into json
-- Copy the `clash_linuxupd@.service` into `/etc/systemd/system`
-- Run `systemctl daemon-reload` and `systemctl enable clash_linuxupd@<YOUR_USERNAME>` to enable autorestart.
-- Finally `systemctl start clash_linuxupd@<YOUR_USERNAME>` to start service.
+- Copy the `clash_linuxupd.service` into `~/.config/systemd/user/`
+- Run `systemctl --user daemon-reload` and `systemctl --user enable clash_linuxupd` to enable autorestart.
+- Finally `systemctl --user start clash_linuxupd` to start service.
 
 ## YACD
 
-Thanks to [YACD - Yet Another Clash Dashboard](https://github.com/haishanh/yacd), the `yacd_pages` comes from its `gh-pages` branch, version 190829.
+Thanks to [YACD - Yet Another Clash Dashboard](https://github.com/haishanh/yacd), the `yacd` comes from its `gh-pages` branch, version 190829.
 
-If you need web service, simply copy `clash_linuxupd_yacd.service` into `/etc/systemd/system`.
+If you need web service, simply copy `clash_linuxupd_yacd.service` into `/~/.config/systemd/user/`.
 
 Then `systemctl daemon-reload` and `systemctl enable clash_linuxupd_yacd` to enable autostart, run `systemctl start clash_linuxupd_yacd` to boot up web server.
 
-The Web Server will listen on port 127.0.0.1:62038 .
+The Web Server will listen on `127.0.0.1:62038`.
 
 ## Disclaimer
 
@@ -34,7 +34,7 @@ I'm not take any responsibility for any of your loss or malfunction.
 
 ## Config File Explained
 
-```jsonc
+```json
 {
     "local-httpport": 1085,         // local http proxy port
     "local-socks5port": 1086,       // local socks5 proxy port

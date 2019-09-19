@@ -1,6 +1,6 @@
 [Unit]
 Description=Clash Background Subscription Updater - YACD Web Panel
-After=local-fs.target network-online.target network.target clash_linuxupd@.service clash@.service
+After=local-fs.target network-online.target network.target clash_linuxupd.service
 Wants=local-fs.target network-online.target network.target
 
 [Service]
