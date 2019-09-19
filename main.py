@@ -12,6 +12,7 @@ from urllib.parse import urlparse
 # Read subscription URL from user config, detect existing or not
 usrconf = os.path.expanduser("~/.config/clash/user-subscribe.json")
 if os.path.isfile(usrconf):
+    print("Detecting if config file exists...")
     print("User Config File: " + usrconf)
 else:
     raise OSError("Config file is not existing, please read README file.")
@@ -20,8 +21,10 @@ usrconf = json.loads(open(usrconf, "r", encoding="utf-8").read())
 
 
 def checkconfig():
+    print("Checking if subscription url is configured...")
     if usrconf["subscribe-url"] == ["http://host:port/apikey/clash/config.yaml"]:
         raise EnvironmentError("You don't have configured any subscription url till now.")
+    print("Checking if Enhanced DNS is configured...")
     if usrconf["dns-enhanced"] == "fake-ip" or usrconf["dns-enhanced"] == "redir-host":
         pass
     else:
@@ -29,6 +32,7 @@ def checkconfig():
 
 
 def preparing():
+    print("Build initial template of clash config file...")
     clash_conf = {
         "port": usrconf["local-httpport"],
         "socks-port": usrconf["local-socks5port"],
@@ -70,6 +74,7 @@ def main():
     checkconfig()
     subsconf = []
     # Access each url to get data
+    print("Conncet to URL to get your managed subscription data...")
     for url in usrconf["subscribe-url"]:
         try:
             if usrconf["is_gfwed"]:
@@ -86,6 +91,7 @@ def main():
             print("Your Proxy Server Config is not correct, please check again.")
             sys.exit(2)
     # Remove duplicate guys
+    print("Collecting all datas just have been gotten...")
     if subsconf:
         subsconf = list(dict.fromkeys(subsconf))
     else:
@@ -122,6 +128,7 @@ def main():
                     pass
     # ADD AUTO_LOAD_BALANCE_STRATEGY
     # Reference: https://github.com/Dreamacro/clash
+    print("Building customized load balance config...")
     load_balancer_policy = {"name": "lb-allproxy", "type": "load-balance",
                             "url": usrconf["latency-test-url"],
                             "interval": 300, "proxies": ["DIRECT", "REJECT"]
@@ -130,10 +137,13 @@ def main():
         load_balancer_policy["proxies"].append(proxies)
     proxy_groups.append(load_balancer_policy)
     # Processing Rules
+    print("Add the preferred rules managed by your ISP...")
     finaldata["Rule"] = tempstorage[usrconf["rules-preference"]]["Rule"]
     # Dump the data to file
+    print("Write processed config to file...")
     with open(os.path.expanduser('~/.config/clash/config.yaml'), 'w', encoding='utf-8') as configfd:
         configfd.write(yaml.dump(finaldata, allow_unicode=True, encoding='utf-8'))
+    print("Please restart clash service... The web panel is on port 62038...")
     return 0
 
 
