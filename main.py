@@ -106,7 +106,8 @@ def main():
     # Processing PROXY SERVER PARSE
     proxy_servers = []
     for i in tempstorage:
-        proxy_servers.append(i["Proxy"])
+        for p in i["Proxy"]:
+            proxy_servers.append(p)
     finaldata["Proxy"] = proxy_servers
     # Processing PROXY GROUP PARSE
     proxy_groups = []
@@ -114,12 +115,11 @@ def main():
         if i == usrconf["rules-preference"]:
             proxy_groups.append(tempstorage[i]["Proxy Group"])
         else:
-            for existing_conf in tempstorage[i]:
-                for groupdt in existing_conf["Proxy Group"]:
-                    if groupdt["name"] == service_provider_list[i]:
-                        proxy_groups.append(groupdt)
-                    else:
-                        pass
+            for groupdt in tempstorage[i]["Proxy Group"]:
+                if groupdt["name"] == service_provider_list[i]:
+                    proxy_groups.append(groupdt)
+                else:
+                    pass
     # ADD AUTO_LOAD_BALANCE_STRATEGY
     # Reference: https://github.com/Dreamacro/clash
     load_balancer_policy = {"name": "lb-allproxy", "type": "load-balance",
@@ -132,8 +132,8 @@ def main():
     # Processing Rules
     finaldata["Rule"] = tempstorage[usrconf["rules-preference"]]["Rule"]
     # Dump the data to file
-    with open(os.path.expanduser('~/.config/clash/config.yaml'), 'w') as configfd:
-        configfd.write(yaml.dump(finaldata))
+    with open(os.path.expanduser('~/.config/clash/config.yaml'), 'w', encoding='utf-8') as configfd:
+        configfd.write(yaml.dump(finaldata, allow_unicode=True, encoding='utf-8'))
     return 0
 
 
