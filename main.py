@@ -47,7 +47,7 @@ def preparing():
             "nameserver": usrconf["upstream-dns"],
             "fallback": usrconf["fallback-dns"]
         },
-        "cfw-latency-url": "http://captive.rixcloud.io/generate_204",
+        "cfw-latency-url": usrconf["latency-test-url"],
         "cfw-bypass": ["qq.com", "music.163.com", "*.music.126.net", "localhost", "127.*", "10.*", "172.16.*",
                        "172.17.*", "172.18.*", "172.19.*", "172.20.*", "172.21.*", "172.22.*", "172.23.*", "172.24.*",
                        "172.25.*", "172.26.*", "172.27.*", "172.28.*", "172.29.*", "172.30.*", "172.31.*",
@@ -115,7 +115,7 @@ def main():
     # ADD AUTO_LOAD_BALANCE_STRATEGY
     # Reference: https://github.com/Dreamacro/clash
     load_balancer_policy = {"name": "lb-allproxy", "type": "load-balance",
-                            "url": "http://captive.rixcloud.io/generate_204",
+                            "url": usrconf["latency-test-url"],
                             "interval": 300, "proxies": ["DIRECT", "REJECT"]
                             }
     for proxies in service_provider_list:
