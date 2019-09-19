@@ -6,6 +6,8 @@ Suitable for Linux Distributions based on Systemd.
 
 For Arch Linux User, just install `clash` from `archlinuxcn` repo. And enable then start `clash@<YOUR_USERNAME>.service` after you run this service.
 
+Please modify this service to let `clash_linuxupd.service` before `clash.service` start.
+
 ## Usage
 
 - Clone the repo with `--recursive` into `~/.local/clash_linuxupd`

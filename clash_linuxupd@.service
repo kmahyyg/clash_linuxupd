@@ -2,6 +2,7 @@
 Description=Clash Background Subscription Updater Watchdog
 After=local-fs.target network-online.target network.target
 Wants=local-fs.target network-online.target network.target
+Before=clash@.service
 
 [Service]
 User=%i

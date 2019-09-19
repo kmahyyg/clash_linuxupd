@@ -109,12 +109,20 @@ def main():
                         proxy_groups.append(groupdt)
                     else:
                         pass
-    #TODO: ADD AUTO_LOAD_BALANCE_STRATEGY
+    # ADD AUTO_LOAD_BALANCE_STRATEGY
     # Reference: https://github.com/Dreamacro/clash
-
+    load_balancer_policy = {"name": "lb-allproxy", "type": "load-balance",
+                            "url": "http://captive.rixcloud.io/generate_204",
+                            "interval": 300, "proxies": ["DIRECT", "REJECT"]
+                        }
+    for proxies in service_provider_list:
+        load_balancer_policy["proxies"].append(proxies)
+    proxy_groups.append(load_balancer_policy)
     # Processing Rules
     finaldata["Rule"] = tempstorage[usrconf["rules-preference"]]["Rule"]
-    #TODO: Dump the data to file
+    # Dump the data to file
+    with open(os.path.expanduser('~/.config/clash/config.yaml'), 'w') as configfd:
+        configfd.write(yaml.dump(finaldata))
     return 0
     
 
