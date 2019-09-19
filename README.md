@@ -10,6 +10,15 @@ For Arch Linux User, just install `clash` from `archlinuxcn` repo. And enable th
 
 ## Usage
 
+### Automated Way
+
+```sh
+$ curl -Lo install.sh https://raw.githubusercontent.com/kmahyyg/clash_linuxupd/master/install.sh
+$ bash ./install.sh
+```
+
+### Manual Way
+
 - Create Folder and Chown `mkdir -p /usr/local/clash_linuxupd && chown $(whoami):$(whoami) /usr/local/clash_linuxupd`
 - Clone the repo with `--recursive` into `/usr/local/clash_linuxupd`
 - Change config (ports, dns, allow-lan) in `user-subscribe.json.eg`
