@@ -8,7 +8,7 @@ For Arch Linux User, just install `clash` from `archlinuxcn` repo. And enable th
 
 ## Usage
 
-- Clone the repo into `~/.local/clash_linuxupd`
+- Clone the repo with `--recursive` into `~/.local/clash_linuxupd`
 - Change config (ports, dns, allow-lan) in `user-subscribe.json.eg`
 - Rename `user-subscribe.json.eg` to `user-subscribe.json` and copy to `~/.config/clash`
 - Insert your managed subscription config file URL into json
