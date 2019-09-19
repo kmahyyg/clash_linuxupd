@@ -8,6 +8,7 @@ import os
 import json
 import sys
 from urllib.parse import urlparse
+from copy import deepcopy
 
 # Read subscription URL from user config, detect existing or not
 usrconf = os.path.expanduser("~/.config/clash/user-subscribe.json")
@@ -74,7 +75,7 @@ def main():
     checkconfig()
     subsconf = []
     # Access each url to get data
-    print("Conncet to URL to get your managed subscription data...")
+    print("Connect to URL to get your managed subscription data...")
     for url in usrconf["subscribe-url"]:
         try:
             if usrconf["is_gfwed"]:
@@ -124,7 +125,13 @@ def main():
         else:
             for groupdt in tempstorage[i]["Proxy Group"]:
                 if groupdt["name"] == service_provider_list[i]:
-                    proxy_groups.append(groupdt)
+                    new_groupdt = deepcopy(groupdt)
+                    for server in new_groupdt["proxies"]:
+                        if server not in proxy_servers:
+                            new_groupdt["proxies"].remove(server)
+                        else:
+                            pass
+                    proxy_groups.append(new_groupdt)
                 else:
                     pass
     finaldata["Proxy Group"] = proxy_groups
