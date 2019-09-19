@@ -47,7 +47,12 @@ def preparing():
             "nameserver": usrconf["upstream-dns"],
             "fallback": usrconf["fallback-dns"]
         },
-        "cfw-latency-url": "http://captive.rixcloud.io/generate_204"
+        "cfw-latency-url": "http://captive.rixcloud.io/generate_204",
+        "cfw-bypass": ["qq.com", "music.163.com", "*.music.126.net", "localhost", "127.*", "10.*", "172.16.*", "172.17.*", "172.18.*", "172.19.*", "172.20.*", "172.21.*", "172.22.*", "172.23.*", "172.24.*", "172.25.*", "172.26.*", "172.27.*", "172.28.*", "172.29.*", "172.30.*", "172.31.*", "192.168.*", "<local>"],
+        "cfw-latency-timeout": 5000,
+        "Proxy": [],
+        "Proxy Group": [],
+        "Rule": []
     }
     return clash_conf
 
@@ -87,9 +92,28 @@ def main():
         print("Error: Rule preference is not corresponding to subscribe URL number.")
         print("Note: Preference Number Start From 0, Not 1!")
         sys.exit(2)
-    #TODO: Processing PROXY SERVER PARSE
-    #TODO: Processing PROXY GROUP PARSE
+    # Processing PROXY SERVER PARSE
+    proxy_servers = []
+    for i in tempstorage:
+        proxy_servers.append(i["Proxy"])
+    finaldata["Proxy"] = proxy_servers
+    # Processing PROXY GROUP PARSE
+    proxy_groups = []
+    for i in range(0, len(tempstorage)):
+        if i == usrconf["rules-preference"]:
+            proxy_groups.append(tempstorage[i]["Proxy Group"])
+        else:
+            for existing_conf in tempstorage[i]:
+                for groupdt in existing_conf["Proxy Group"]:
+                    if groupdt["name"] == service_provider_list[i]:
+                        proxy_groups.append(groupdt)
+                    else:
+                        pass
     #TODO: ADD AUTO_LOAD_BALANCE_STRATEGY
+    # Reference: https://github.com/Dreamacro/clash
+
+    # Processing Rules
+    finaldata["Rule"] = tempstorage[usrconf["rules-preference"]]["Rule"]
     #TODO: Dump the data to file
     return 0
     
