@@ -10,7 +10,8 @@ For Arch Linux User, just install `clash` from `archlinuxcn` repo. And enable th
 
 ## Usage
 
-- Clone the repo with `--recursive` into `~/.local/clash_linuxupd`
+- Create Folder and Chown `mkdir -p /usr/local/clash_linuxupd && chown $(whoami):$(whoami) /usr/local/clash_linuxupd`
+- Clone the repo with `--recursive` into `/usr/local/clash_linuxupd`
 - Change config (ports, dns, allow-lan) in `user-subscribe.json.eg`
 - Rename `user-subscribe.json.eg` to `user-subscribe.json` and copy to `~/.config/clash`
 - Insert your managed subscription config file URL into json
@@ -22,9 +23,9 @@ For Arch Linux User, just install `clash` from `archlinuxcn` repo. And enable th
 
 Thanks to [YACD - Yet Another Clash Dashboard](https://github.com/haishanh/yacd), the `yacd` comes from its `gh-pages` branch, version 190829.
 
-If you need web service, simply copy `clash_linuxupd_yacd.service` into `/~/.config/systemd/user/`.
+If you need web service, simply copy `clash_linuxupd_yacd.service` into `~/.config/systemd/user/`.
 
-Then `systemctl daemon-reload` and `systemctl enable clash_linuxupd_yacd` to enable autostart, run `systemctl start clash_linuxupd_yacd` to boot up web server.
+Then `systemctl --user daemon-reload` and `systemctl --user enable clash_linuxupd_yacd` to enable autostart, run `systemctl --user start clash_linuxupd_yacd` to boot up web server.
 
 The Web Server will listen on `127.0.0.1:62038`.
 

@@ -4,11 +4,9 @@ After=local-fs.target network-online.target network.target
 Wants=local-fs.target network-online.target network.target
 
 [Service]
-ExecStart=/usr/bin/python3 ~/.local/clash_linuxupd/main.py
+ExecStart=/usr/bin/python3 /usr/local/clash_linuxupd/main.py
 KillMode=process
 Type=oneshot
-Restart=on-abnormal
-RestartSec=5
 
 [Install]
 WantedBy=multi-user.target

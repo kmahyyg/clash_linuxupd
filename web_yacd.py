@@ -7,7 +7,7 @@ import os
 
 PORT = 62038
 
-os.chdir(os.path.expanduser("~/.local/clash_linuxupd/yacd"))
+os.chdir(os.path.expanduser("/usr/local/clash_linuxupd/yacd"))
 
 Handler = http.server.SimpleHTTPRequestHandler
 httpd = socketserver.TCPServer(("127.0.0.1", PORT), Handler)

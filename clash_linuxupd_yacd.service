@@ -4,7 +4,7 @@ After=local-fs.target network-online.target network.target clash_linuxupd.servic
 Wants=local-fs.target network-online.target network.target
 
 [Service]
-ExecStart=/usr/bin/python3 ~/.local/clash_linuxupd/web_yacd.py
+ExecStart=/usr/bin/python3 /usr/local/clash_linuxupd/web_yacd.py
 KillMode=process
 Type=simple
 Restart=on-abnormal

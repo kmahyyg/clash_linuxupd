@@ -1,6 +1,6 @@
 [Unit]
 Description=A rule based proxy in Go for %i.
-After=network.target clash_linuxupd.service
+After=network-online.target clash_linuxupd.service
 
 [Service]
 Type=simple
