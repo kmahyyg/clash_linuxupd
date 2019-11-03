@@ -1,5 +1,6 @@
 __pycache__
 __mypycache__
 user-subscribe.json
+.mypy_cache
 .vscode
 .idea
