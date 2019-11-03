@@ -19,18 +19,18 @@ $ bash ./install.sh
 
 ### Manual Way
 
-- Create Folder and Chown `mkdir -p /usr/local/clash_linuxupd && chown $(whoami):$(whoami) /usr/local/clash_linuxupd`
+- Create Folder and Chown `mkdir -p /usr/local/clash_linuxupd && chown $(id -u):$(id -u) /usr/local/clash_linuxupd`
 - Clone the repo with `--recursive` into `/usr/local/clash_linuxupd`
 - Change config (ports, dns, allow-lan) in `user-subscribe.json.eg`
 - Rename `user-subscribe.json.eg` to `user-subscribe.json` and copy to `~/.config/clash`
-- Insert your managed subscription config file URL into json
+- Insert your managed subscription config file URL into json, your self-build server should be configured in `self_servers.json` and the format is strictly following the Clash format and customized format example is `self_servers.json.eg`.
 - Copy the `clash_linuxupd.service` into `~/.config/systemd/user/`
 - Run `systemctl --user daemon-reload` and `systemctl --user enable clash_linuxupd` to enable autorestart.
 - Finally `systemctl --user start clash_linuxupd` to start service.
 
 ## YACD
 
-Thanks to [YACD - Yet Another Clash Dashboard](https://github.com/haishanh/yacd), the `yacd` comes from its `gh-pages` branch, version 190829.
+Thanks to [YACD - Yet Another Clash Dashboard](https://github.com/haishanh/yacd), the `yacd` comes from its `gh-pages` branch, version 191014.
 
 If you need web service, simply copy `clash_linuxupd_yacd.service` into `~/.config/systemd/user/`.
 

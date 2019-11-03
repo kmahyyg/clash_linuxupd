@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # clash_linuxupd installation scripts
 
 CURRENT_USER=$(whoami)
@@ -26,6 +26,9 @@ less /usr/local/clash_linuxupd/README.md
 echo "Please modify the config according to readme file."
 $EDITOR /usr/local/clash_linuxupd/user-subscribe.json.eg
 cp -f /usr/local/clash_linuxupd/user-subscribe.json.eg ~/.config/clash/user-subscribe.json
+echo "Please modify the custom build server config according to readme file."
+$EDITOR /usr/local/clash_linuxupd/self_servers.json.eg
+cp -f /usr/local/clash_linuxupd/self_servers.json.eg ~/.config/clash/self_servers.json
 cp -f /usr/local/clash_linuxupd/clash_linuxup* ~/.config/systemd/user/
 
 systemctl --user daemon-reload
@@ -33,6 +36,7 @@ systemctl --user enable clash_linuxupd
 systemctl --user start clash_linuxupd
 systemctl --user enable clash_linuxupd_yacd
 systemctl --user start clash_linuxupd_yacd
+systemctl restart clash@$(whoami)
 
 echo "YACD Web Server is listening on localhost:62038."
 echo "Installation Successfully Finished."
