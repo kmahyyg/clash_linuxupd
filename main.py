@@ -170,7 +170,7 @@ def main():
             for p in finaldata["Proxy"]:
                 i["proxies"].append(p["name"])
             prxygp = i
-    finaldata["Proxy Group"] = prxygp
+    finaldata["Proxy Group"] = [].append(prxygp)
     # Dump the data to file
     print("Write processed config to file...")
     with open(os.path.expanduser('~/.config/clash/config.yaml'), 'w', encoding='utf-8') as configfd:
