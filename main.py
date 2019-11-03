@@ -9,16 +9,21 @@ import json
 import sys
 from urllib.parse import urlparse
 from copy import deepcopy
+from secrets import token_hex as randtkn
 
 # Read subscription URL from user config, detect existing or not
 usrconf = os.path.expanduser("~/.config/clash/user-subscribe.json")
-if os.path.isfile(usrconf):
+cusserv = os.path.expanduser("~/.config/clash/self_servers.json")
+if os.path.isfile(usrconf) and os.path.isfile(cusserv):
     print("Detecting if config file exists...")
     print("User Config File: " + usrconf)
+    print("Custom server config: "+ cusserv)
 else:
     raise OSError("Config file is not existing, please read README file.")
 
+
 usrconf = json.loads(open(usrconf, "r", encoding="utf-8").read())
+cusserv = json.loads(open(cusserv, "r", encoding="utf-8").read())["servers"]
 
 
 def checkconfig():
@@ -115,6 +120,8 @@ def main():
     for i in tempstorage:
         for p in i["Proxy"]:
             proxy_servers.append(p)
+    for i in cusserv:
+        proxy_servers.append(i)
     finaldata["Proxy"] = proxy_servers
     # Processing PROXY GROUP PARSE
     proxy_groups = []
@@ -153,6 +160,17 @@ def main():
     for perr in tempstorage[usrconf["rules-preference"]]["Rule"]:
         dt = perr.replace(service_provider_list[usrconf["rules-preference"]], "LB-ALLPROXY")
         finaldata["Rule"].append(dt)
+    # Final Process to Remove Useless groups
+    prxygp = []
+    for i in finaldata["Proxy Group"]:
+        if i["name"] != "LB-ALLPROXY":
+            pass
+        else:
+            i["proxies"] = ["DIRECT"]
+            for p in finaldata["Proxy"]:
+                i["proxies"].append(p["name"])
+            prxygp = i
+    finaldata["Proxy Group"] = prxygp
     # Dump the data to file
     print("Write processed config to file...")
     with open(os.path.expanduser('~/.config/clash/config.yaml'), 'w', encoding='utf-8') as configfd:
