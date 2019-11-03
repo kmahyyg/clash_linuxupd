@@ -83,9 +83,9 @@ def main():
                     'http': usrconf["gfwed_proxy"],
                     'https': usrconf["gfwed_proxy"],
                 }
-                subsconf.append(httpget(url, timeout=5, proxies=fuckgfw).text)
+                subsconf.append(httpget(url, timeout=15, proxies=fuckgfw).text)
             else:
-                subsconf.append(httpget(url, timeout=5).text)
+                subsconf.append(httpget(url, timeout=15).text)
         except ConnectTimeout:
             print("Cannot connect to " + urlparse(url).netloc + " , This config is ignored!")
         except ProxyError:
