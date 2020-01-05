@@ -28,6 +28,27 @@ $ bash ./install.sh
 - Run `systemctl --user daemon-reload` and `systemctl --user enable clash_linuxupd` to enable autorestart.
 - Finally `systemctl --user start clash_linuxupd` to start service.
 
+Note: **The rule now should be defined by yourself, I won't process ISP offered data. The collected proxy group is named "LB-ALLPROXY".**
+
+An example can be found here:
+
+```json
+{
+    "servers": [
+        {}
+    ],
+    "rules": [
+	"IP-CIDR,192.168.0.0/16,DIRECT",
+        "IP-CIDR,10.0.0.0/8,DIRECT",
+        "IP-CIDR,172.16.0.0/12,DIRECT",
+        "IP-CIDR,127.0.0.0/8,DIRECT",
+        "IP-CIDR,100.64.0.0/10,DIRECT",
+    	"GEOIP,CN,DIRECT",
+	"MATCH,LB-ALLPROXY"
+    ]
+}
+```
+
 ## YACD
 
 Thanks to [YACD - Yet Another Clash Dashboard](https://github.com/haishanh/yacd), the `yacd` comes from its `gh-pages` branch, version 191014.
