@@ -13,17 +13,18 @@ from secrets import token_hex as randtkn
 
 # Read subscription URL from user config, detect existing or not
 usrconf = os.path.expanduser("~/.config/clash/user-subscribe.json")
-cusserv = os.path.expanduser("~/.config/clash/self_servers.json")
-if os.path.isfile(usrconf) and os.path.isfile(cusserv):
+cusservfd = os.path.expanduser("~/.config/clash/self_servers.json")
+if os.path.isfile(usrconf) and os.path.isfile(cusservfd):
     print("Detecting if config file exists...")
     print("User Config File: " + usrconf)
-    print("Custom server config: "+ cusserv)
+    print("Custom server config: "+ cusservfd)
 else:
     raise OSError("Config file is not existing, please read README file.")
 
 
 usrconf = json.loads(open(usrconf, "r", encoding="utf-8").read())
-cusserv = json.loads(open(cusserv, "r", encoding="utf-8").read())["servers"]
+cusserv = json.loads(open(cusservfd, "r", encoding="utf-8").read())["servers"]
+cusrule = json.loads(open(cusservfd, "r", encoding="utf-8").read())["rules"]
 
 
 def checkconfig():
@@ -153,13 +154,9 @@ def main():
         load_balancer_policy["proxies"].append(proxies)
     proxy_groups.append(load_balancer_policy)
     # Processing Rules
-    print("Add the preferred rules managed by your ISP...")
-    # Process rules to replace ISP name to LB-ALLPROXY
-    finaldata["Rule"] = []
-    print("Replace ISP Rules to Load Balancer...")
-    for perr in tempstorage[usrconf["rules-preference"]]["Rule"]:
-        dt = perr.replace(service_provider_list[usrconf["rules-preference"]], "LB-ALLPROXY")
-        finaldata["Rule"].append(dt)
+    print("Add the preferred rules managed by yourself...")
+    # Process rules to use the rule defined by yourself
+    finaldata["Rule"] = cusrule
     # Final Process to Remove Useless groups
     prxygp = []
     for i in finaldata["Proxy Group"]:
