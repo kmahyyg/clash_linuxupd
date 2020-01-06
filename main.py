@@ -148,7 +148,7 @@ def main():
     print("Building customized load balance config...")
     load_balancer_policy = {"name": "LB-ALLPROXY", "type": "load-balance",
                             "url": usrconf["latency-test-url"],
-                            "interval": 300, "proxies": ["DIRECT"]
+                            "interval": 300, "proxies": []
                             }
     for proxies in service_provider_list:
         load_balancer_policy["proxies"].append(proxies)
