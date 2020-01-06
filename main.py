@@ -163,7 +163,7 @@ def main():
         if i["name"] != "LB-ALLPROXY":
             pass
         else:
-            i["proxies"] = ["DIRECT"]
+            i["proxies"] = []
             for p in finaldata["Proxy"]:
                 i["proxies"].append(p["name"])
             prxygp = i
